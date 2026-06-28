@@ -101,25 +101,44 @@
     <div id="pay" class="payment-methods">
       <h2 style="margin-bottom:20px;">💳 怎么付？</h2>
 
-      <div class="method">
-        <h4>🥇 推荐：USDT-TRC20（最便宜）</h4>
-        <code style="opacity:0.5;">[收款地址即将上线 · 当前阶段仅支持微信/支付宝]</code>
-        <div class="tip">手续费几乎为 0，5 分钟到账。<b>当前阶段</b>：加密支付通道搭建中，请先用下方微信支付。</div>
+      <div style="background:#06d6a0; color:#0f1115; padding:12px; border-radius:8px; margin-bottom:16px; text-align:center;">
+        <b>🎉 新通道：</b>海外用户现在可用<b>信用卡 / Apple Pay / Google Pay</b>（Creem.io 接入中）<br>
+        <a href="#crypto" style="color:#0f1115;">国内用户 → 看下方</a>
       </div>
 
       <div class="method">
-        <h4>🥈 备选：BTC（最通用）</h4>
-        <code style="opacity:0.5;">[收款地址即将上线 · 当前阶段仅支持微信/支付宝]</code>
-        <div class="tip">全球通用。当前阶段：加密支付通道搭建中。</div>
-      </div>
-
-      <div class="method">
-        <h4>🥉 当前唯一通道：微信 / 支付宝</h4>
-        <code>📱 加微信 promptdrop_cs 付款</code>
+        <h4>🌍 海外用户：信用卡 / Apple Pay</h4>
+        <code style="opacity:0.5;">[Creem.io 通道接入中 · 完成后会自动跳转]</code>
         <div class="tip">
-          <b>当前阶段</b>仅支持微信 / 支付宝人工收款。
-          加好友后客服会发收款码 → 你扫码付款 → 截图给客服 → 5 分钟内发货。<br>
-          <b style="color:#ffd166;">支持加密货币？</b>关注 GitHub Issue <a href="https://github.com/snail2sky/promptdrop/issues" target="_blank" style="color:#06d6a0;">#crypto-payment</a>，开放后会第一时间通知。
+          <b>支持</b>：Visa / Master / Amex / Apple Pay / Google Pay · 全球 200+ 国家
+          <br><b>费率</b>：5% + $0.50（9.9 元到手约 ¥6.1）
+          <br><b>进度</b>：Creem.io 商户注册中，预计 24h 内上线。<a href="https://github.com/snail2sky/promptdrop/issues" target="_blank">关注 Issue 通知</a>
+        </div>
+      </div>
+
+      <div class="method">
+        <h4>💎 全球用户：加密货币（USDT-TRC20 / BTC / ETH）</h4>
+        <code style="opacity:0.5;">[NOWPayments 通道集成代码就绪 · 申请 API key 中]</code>
+        <div class="tip">
+          <b>支持</b>：USDT-TRC20 / BTC / ETH / 200+ 币种
+          <br><b>费率</b>：0.4-0.5%（9.9 元到手约 ¥9.5）
+          <br><b>进度</b>：NOWPayments API 集成完成（<code>crypto_invoice.py</code>），等 API key 激活。<a href="https://github.com/snail2sky/promptdrop/issues" target="_blank">关注 Issue</a>
+        </div>
+      </div>
+
+      <div class="method" id="crypto">
+        <h4>🇨🇳 当前唯一通道：GitHub Issue 半手动</h4>
+        <code>📝 在 Issue 留言 → 客服私下发收款码 → 付款 → 发货</code>
+        <div class="tip">
+          <b>当前阶段</b>，中国大陆用户走半手动流程：
+          <ol style="margin-top:8px; padding-left:20px;">
+            <li>打开 <a href="https://github.com/snail2sky/promptdrop/issues/new" target="_blank" style="color:#06d6a0;">新建 Issue</a></li>
+            <li>标题写 <code>[购买] PD-001 你的邮箱</code></li>
+            <li>正文：邮箱 + 想要哪个 SKU + 微信（方便客服联系）</li>
+            <li>5 分钟内客服微信 <b>promptdrop_cs</b> 加你 → 发收款码</li>
+            <li>你付款 → 截图发客服 → 5 分钟内发货</li>
+          </ol>
+          <b style="color:#ffd166;">支持支付宝口令红包 / 微信红包 / USDT（任何方式都行）</b>
         </div>
       </div>
 
