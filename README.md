@@ -4,6 +4,9 @@
 > 创建时间:2026年6月
 >
 > 🌐 **在线访问: https://snail2sky.github.io/ai-startup-kit/**
+> 💝 **赞助解锁: https://snail2sky.github.io/ai-startup-kit/sponsor.html**
+>
+> 🆕 **姊妹项目 [snail2sky/promptdrop](https://github.com/snail2sky/promptdrop)** —— AI 模板虚拟商品小店实战版，GitHub Issues 公开进展
 
 ---
 
