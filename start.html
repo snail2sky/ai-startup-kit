@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>30分钟启动清单 · 交互式追踪器</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  padding: 20px;
+  color: #333;
+}
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  overflow: hidden;
+}
+.header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 40px 30px;
+  text-align: center;
+}
+.header h1 { font-size: 32px; margin-bottom: 10px; }
+.header p { opacity: 0.9; font-size: 16px; }
+.progress {
+  background: rgba(255,255,255,0.2);
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+.progress-bar {
+  background: rgba(255,255,255,0.3);
+  height: 12px;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+.progress-fill {
+  background: #fbbf24;
+  height: 100%;
+  width: 0%;
+  transition: width 0.5s ease;
+}
+.content { padding: 30px; }
+.section {
+  margin-bottom: 30px;
+  padding: 20px;
+  background: #f9fafb;
+  border-radius: 12px;
+  border-left: 4px solid #667eea;
+}
+.section h2 {
+  color: #667eea;
+  margin-bottom: 15px;
+  font-size: 20px;
+}
+.task {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  margin: 8px 0;
+  background: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 2px solid transparent;
+}
+.task:hover { border-color: #667eea; }
+.task.completed {
+  background: #d1fae5;
+  border-color: #10b981;
+}
+.task input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  margin-right: 12px;
+  cursor: pointer;
+}
+.task label {
+  flex: 1;
+  cursor: pointer;
+  font-size: 15px;
+}
+.task.completed label {
+  text-decoration: line-through;
+  color: #6b7280;
+}
+.timer {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: white;
+  padding: 15px 25px;
+  border-radius: 50px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  font-weight: bold;
+  color: #667eea;
+  font-size: 18px;
+}
+.actions {
+  text-align: center;
+  padding: 30px;
+  background: #f9fafb;
+}
+.btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 30px;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 0 5px;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(102,126,234,0.4); }
+.reward {
+  background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+  padding: 30px;
+  text-align: center;
+  margin: 20px;
+  border-radius: 12px;
+  display: none;
+}
+.reward.show { display: block; }
+.reward h2 { color: #d97706; margin-bottom: 15px; }
+.tip {
+  background: #fef3c7;
+  border-left: 4px solid #f59e0b;
+  padding: 15px;
+  margin: 15px 0;
+  border-radius: 8px;
+  font-size: 14px;
+}
+.code-block {
+  background: #1f2937;
+  color: #fbbf24;
+  padding: 15px;
+  border-radius: 8px;
+  font-family: monospace;
+  font-size: 13px;
+  margin: 10px 0;
+  overflow-x: auto;
+}
+</style>
+</head>
+<body>
+
+<div class="timer" id="timer">⏱ 30:00</div>
+
+<div class="container">
+  <div class="header">
+    <h1>⚡ 30分钟启动清单</h1>
+    <p>勾选完成的任务,30分钟后你就能在闲鱼开店</p>
+    <div class="progress">
+      <div id="progressText">进度: 0/12 (0%)</div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div class="section">
+      <h2>📱 第1步:注册闲鱼(5分钟)</h2>
+      <div class="task">
+        <input type="checkbox" id="task1">
+        <label for="task1">下载闲鱼App</label>
+      </div>
+      <div class="task">
+        <input type="checkbox" id="task2">
+        <label for="task2">用支付宝/手机号登录</label>
+      </div>
+      <div class="task">
+        <input type="checkbox" id="task3">
+        <label for="task3">完成实名认证</label>
+      </div>
+      <div class="task">
+        <input type="checkbox" id="task4">
+        <label for="task4">设置头像(AI生成的清爽图)</label>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>📝 第2步:上架第1个商品(10分钟)</h2>
+      <div class="tip">
+        💡 复制下面的商品文案,粘贴到闲鱼
+      </div>
+      <div class="code-block">
+标题: AI做PPT 专业定制 毕业答辩 工作汇报 1小时交付
+
+价格: 19.9元起
+
+详情页:
+【专业PPT定制服务,AI提效】
+✅ 服务内容:毕业答辩/工作汇报/产品介绍
+✅ 价格:10页19.9元,20页49.9元,30页99.9元
+✅ 交付:加急1-3小时,常规24小时
+✅ 售后:不满意免费修改2次
+📞 拍前私信我发需求~
+      </div>
+      <div class="task">
+        <input type="checkbox" id="task5">
+        <label for="task5">发布第1个商品</label>
+      </div>
+      <div class="task">
+        <input type="checkbox" id="task6">
+        <label for="task6">复制变体,再发4个(共5个)</label>
+      </div>
+      <div class="task">
+        <input type="checkbox" id="task7">
+        <label for="task7">设置自动回复</label>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>📱 第3步:同步小红书引流(10分钟)</h2>
+      <div class="task">
+        <input type="checkbox" id="task8">
+        <label for="task8">注册小红书账号</label>
+      </div>
+      <div class="task">
+        <input type="checkbox" id="task9">
+        <label for="task9">发第1条笔记(用现成模板)</label>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>💰 第4步:主动出击(5分钟)</h2>
+      <div class="task">
+        <input type="checkbox" id="task10">
+        <label for="task10">擦亮所有商品(早8-9点效果最佳)</label>
+      </div>
+      <div class="task">
+        <input type="checkbox" id="task11">
+        <label for="task11">加入5个相关社群</label>
+      </div>
+      <div class="task">
+        <input type="checkbox" id="task12">
+        <label for="task12">给自己说"我开始了!"</label>
+      </div>
+    </div>
+
+    <div class="reward" id="reward">
+      <h2>🎉 恭喜!你已经完成了所有启动步骤!</h2>
+      <p style="margin-top: 15px;">现在你是一个有商品在售的"老板"了!</p>
+      <p style="margin-top: 10px; color: #92400e;">第1周目标:每天擦亮,每天发笔记,接到第1单</p>
+      <p style="margin-top: 15px; font-size: 18px; color: #d97706;">💰 预计30天后:月入3000-10000元</p>
+    </div>
+
+  </div>
+
+  <div class="actions">
+    <button class="btn" onclick="resetTasks()">🔄 重新开始</button>
+    <button class="btn" onclick="saveProgress()">💾 保存进度</button>
+  </div>
+
+</div>
+
+<script>
+// 计时器
+let seconds = 30 * 60;
+function updateTimer() {
+  const m = Math.floor(seconds / 60);
+  const s = seconds % 60;
+  document.getElementById('timer').textContent =
+    `⏱ ${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  if (seconds > 0) seconds--;
+}
+setInterval(updateTimer, 1000);
+
+// 任务进度
+const tasks = document.querySelectorAll('input[type="checkbox"]');
+const totalTasks = tasks.length;
+
+tasks.forEach(task => {
+  // 从 localStorage 恢复
+  const saved = localStorage.getItem('task_' + task.id);
+  if (saved === 'true') {
+    task.checked = true;
+    task.parentElement.classList.add('completed');
+  }
+
+  task.addEventListener('change', updateProgress);
+});
+
+function updateProgress() {
+  let completed = 0;
+  tasks.forEach(task => {
+    if (task.checked) {
+      completed++;
+      task.parentElement.classList.add('completed');
+      localStorage.setItem('task_' + task.id, 'true');
+    } else {
+      task.parentElement.classList.remove('completed');
+      localStorage.setItem('task_' + task.id, 'false');
+    }
+  });
+
+  const percent = Math.round((completed / totalTasks) * 100);
+  document.getElementById('progressText').textContent =
+    `进度: ${completed}/${totalTasks} (${percent}%)`;
+  document.getElementById('progressFill').style.width = percent + '%';
+
+  if (completed === totalTasks) {
+    document.getElementById('reward').classList.add('show');
+  } else {
+    document.getElementById('reward').classList.remove('show');
+  }
+}
+
+function resetTasks() {
+  if (confirm('确定要重新开始吗?所有进度会被清除。')) {
+    tasks.forEach(task => {
+      task.checked = false;
+      task.parentElement.classList.remove('completed');
+      localStorage.removeItem('task_' + task.id);
+    });
+    seconds = 30 * 60;
+    updateProgress();
+  }
+}
+
+function saveProgress() {
+  alert('✅ 进度已保存!下次打开会自动恢复。');
+}
+
+// 初始化
+updateProgress();
+</script>
+
+</body>
+</html>
