@@ -1,0 +1,38 @@
+name: Sponsor Form
+
+on:
+  workflow_dispatch:
+    inputs:
+      email:
+        description: "Buyer email"
+        required: true
+      amount:
+        description: "Amount CNY"
+        required: true
+      tier:
+        description: "Tier"
+        required: true
+      tx_hash:
+        description: "TX hash"
+        required: false
+        default: ""
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo inputs
+        run: |
+          echo "email=${{ inputs.email }}"
+          echo "amount=${{ inputs.amount }}"
+          echo "tier=${{ inputs.tier }}"
+          echo "tx_hash=${{ inputs.tx_hash }}"
+      - name: Create issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue create \
+            --repo snail2sky/promptdrop \
+            --title "Sponsor ${{ inputs.tier }} CNY ${{ inputs.amount }}" \
+            --label "sponsor-request" \
+            --body "email: ${{ inputs.email }} | amount: ${{ inputs.amount }} CNY | tier: ${{ inputs.tier }} | tx_hash: ${{ inputs.tx_hash }} | ua: ${{ inputs.ua }}"
